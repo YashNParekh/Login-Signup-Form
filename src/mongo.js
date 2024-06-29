@@ -1,24 +1,26 @@
-const mongoose=require("mongoose")
+// User.js
 
-mongoose.connect("mongodb://localhost:27017/LoginFormPractice")
-.then(()=>{
-    console.log('mongoose connected');
-})
-.catch((e)=>{
-    console.log('failed');
-})
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const logInSchema=new mongoose.Schema({
-    name:{
-        type:String,
-        required:true
+// Define user schema
+const userSchema = new Schema({
+    name: {
+        type: String,
+        required: true
     },
-    password:{
-        type:String,
-        required:true
+    password: {
+        type: String,
+        required: true
+    },
+    role: {
+        type: String,
+        enum: ['admin', 'teacher', 'student', 'parent'],
+        required: true
     }
-})
+});
 
-const LogInCollection=new mongoose.model('LogInCollection',logInSchema)
+// Create User model
+const User = mongoose.model('User', userSchema);
 
-module.exports=LogInCollection
+module.exports = User;
